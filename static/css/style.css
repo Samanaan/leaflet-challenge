@@ -8,3 +8,54 @@ body,
 html {
   height: 100%;
 }
+
+.legend {
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  width: 200%
+}
+
+.legend h4 {
+  margin-top: 0;
+}
+
+#color-bar {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  border-radius: 5px;
+}
+
+.tick-mark {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background-color: black;
+}
+
+.tick-label {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background-color: black;
+}
+
+
+.tick-mark:first-child {
+  left: 0;
+}
+
+.tick-mark:last-child {
+  right: 0;
+}
+
+
+
+
+
+
+
