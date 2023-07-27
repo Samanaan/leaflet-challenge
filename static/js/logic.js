@@ -1,6 +1,4 @@
-
 // Create base map layers and starting position
-// Come back to this to edit and clean up but IT IS DONE !!!!!!
 
 // Create the tile layer that will be the background of our map.
 let streetmap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -44,24 +42,26 @@ url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojso
 
 d3.json(url).then(function(infoQuakes) {
     
-    //LEGEND!!!!!
+    //Legend creation
+    //Set scale and color scale
     var minValue = 0;
     var maxValue = 100;
     var colorScale = chroma.scale(['blue', 'green']).domain([minValue, maxValue]);
 
+    //Create the legend and position it in the bottom right
     var legend = L.control({ position: 'bottomright' });
 
     legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'legend');
 
-    // Add a title for the legend
+    // Add a title for the legend within the html
     div.innerHTML += '<h4>Legend Title</h4>';
 
-    // Create the color scale legend with continuous color bar and tick marks
+    // Create the color scale legend with continuous color bar and tick marks within html
     var colorBar = '<div id="color-bar"></div>';
     div.innerHTML += colorBar;
 
-    // Get the DOM element of the color bar
+    // Get element of the color bar
     var colorBarElement = div.querySelector('#color-bar');
 
     // Update the style of the color bar using linear gradients
@@ -72,7 +72,7 @@ d3.json(url).then(function(infoQuakes) {
         colorScale(maxValue).hex() +
         ')';
 
-    // Define the number of tick marks
+    // Define the number of tick marks and tick size
     var numTicks = 5;
     var tickSize = 100 / (numTicks - 1);
 
@@ -96,22 +96,21 @@ d3.json(url).then(function(infoQuakes) {
     return div;
     };
 
-    legend.onRemove = function (map) {
-    // Cleanup code if needed
-    };
-
     // Add the legend to the map
     legend.addTo(map);
 
 
-
+    // Create markers and add them to the map
 
     // depth i.e. oneQuake.geometry.coordinates[2]
     let quakesInfo = infoQuakes.features;
     
     for (let i = 0; i < quakesInfo.length; i++) {
+
+        // Get single quake info
         let oneQuake = quakesInfo[i];
 
+        // get depth value and set it to the color scale
         var value = oneQuake.geometry.coordinates[2];
         var color = colorScale(value).hex();
 
